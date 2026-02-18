@@ -4,8 +4,9 @@ from components.chat_ui import render_chat
 from components.visualizations import render_visualizations
 from components.roadmap_ui import render_roadmap
 import requests
+import os
 
-API_URL = "http://localhost:8000"
+API_URL =os.getenv("BACKEND_URL", "http://localhost:8000")
 
 st.set_page_config(page_title="AI Career Recommender", layout="wide", initial_sidebar_state="collapsed")
 
@@ -290,3 +291,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
