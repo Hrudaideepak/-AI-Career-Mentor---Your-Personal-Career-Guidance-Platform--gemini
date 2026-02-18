@@ -1,10 +1,11 @@
 import streamlit as st
 import requests
+import os
 
 def render_roadmap(user_id: int):
     st.header("🗺️ Career Roadmap")
     
-    API_URL = "http://localhost:8000"
+    API_URL = os.getenv("BACKEND_URL","http://localhost:8000")
     roadmap_steps = []
     
     try:
@@ -107,3 +108,4 @@ def render_roadmap(user_id: int):
                     st.rerun()
             else:
                 st.success("You've completed this step! Great progress! 🎉")
+
