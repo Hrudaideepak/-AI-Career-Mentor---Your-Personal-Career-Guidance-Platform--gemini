@@ -1,7 +1,8 @@
 import streamlit as st
 import requests
+import os
 
-API_URL = "http://localhost:8000"
+API_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 def render_sidebar(user_id: int):
     with st.sidebar:
@@ -74,4 +75,5 @@ def render_sidebar(user_id: int):
                             st.error("Failed to upload resume.")
                     except Exception as e:
                         st.error(f"Error: {e}")
+
 
