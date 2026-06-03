@@ -56,7 +56,7 @@ def query_resume_context(query_text: str, user_id: str, resume_id: str = None, n
                 {"resume_id": str(resume_id)}
             ]
         }
-        
+
     results = resume_collection.query(
         query_texts=[query_text],
         n_results=n_results,

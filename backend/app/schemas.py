@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import List, Optional
 from datetime import datetime
 
@@ -21,9 +21,7 @@ class UserLogin(BaseModel):
 class User(UserBase):
     id: int
     created_at: datetime
-
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ChatMessageBase(BaseModel):
     role: str
@@ -36,9 +34,7 @@ class ChatMessageCreate(ChatMessageBase):
 class ChatMessage(ChatMessageBase):
     id: int
     timestamp: datetime
-
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ChatSessionBase(BaseModel):
     summary: Optional[str] = None
@@ -52,9 +48,7 @@ class ChatSession(ChatSessionBase):
     session_number: Optional[int] = None
     created_at: datetime
     messages: List[ChatMessage] = []
-
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ResumeBase(BaseModel):
     parsed_content: str
@@ -66,9 +60,7 @@ class ResumeCreate(ResumeBase):
 class Resume(ResumeBase):
     id: int
     uploaded_at: datetime
-
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CareerRecommendationBase(BaseModel):
     career_name: str
@@ -81,6 +73,4 @@ class CareerRecommendationCreate(CareerRecommendationBase):
 class CareerRecommendation(CareerRecommendationBase):
     id: int
     created_at: datetime
-
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

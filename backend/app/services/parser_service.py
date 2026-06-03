@@ -1,4 +1,4 @@
-import PyPDF2
+import pypdf
 import pandas as pd
 from fastapi import UploadFile
 import io
@@ -27,7 +27,7 @@ async def parse_resume(file: UploadFile) -> str:
 
 async def parse_pdf(file: UploadFile) -> str:
     content = ""
-    pdf_reader = PyPDF2.PdfReader(io.BytesIO(await file.read()))
+    pdf_reader = pypdf.PdfReader(io.BytesIO(await file.read()))
     for page in pdf_reader.pages:
         content += page.extract_text() + "\n"
     return content

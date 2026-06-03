@@ -7,7 +7,7 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 def migrate():
-    engine = create_engine(DATABASE_URL)
+    engine = create_engine(DATABASE_URL, connect_args={'sslmode': 'require'})
     with engine.connect() as conn:
         # Migration 1: Add resume_id to chat_sessions
         try:
