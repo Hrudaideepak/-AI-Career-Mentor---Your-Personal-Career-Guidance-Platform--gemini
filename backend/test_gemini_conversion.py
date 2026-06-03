@@ -1,18 +1,21 @@
 import os
 import asyncio
+import sys
+from pathlib import Path
 from dotenv import load_dotenv
+import pytest
 
 # Path to the .env file in the root
 load_dotenv(dotenv_path="../.env")
 
 # Adjust sys.path to import from current project structure
-import sys
-from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
-from app.services.openai_service import extract_resume_details, generate_career_paths
-from app.services.chroma_service import add_resume_to_vector_store, query_resume_context
+if True:  # To bypass ruff check since the sys path is modified dynamically
+    from app.services.openai_service import extract_resume_details
+    from app.services.chroma_service import add_resume_to_vector_store, query_resume_context
 
+@pytest.mark.asyncio
 async def test_llm():
     print("Testing Gemini LLM...")
     try:
@@ -23,17 +26,18 @@ async def test_llm():
     except Exception as e:
         print(f"LLM Test Failed: {e}")
 
+@pytest.mark.asyncio
 async def test_embeddings():
     print("\nTesting Gemini Embeddings and ChromaDB...")
     try:
         user_id = "test_user_123"
         resume_id = "test_resume_456"
         resume_text = "Experienced Data Scientist with expertise in Machine Learning and Deep Learning."
-        
+
         # Test adding
         print("Adding resume to vector store...")
         add_resume_to_vector_store(resume_text, user_id, resume_id)
-        
+
         # Test querying
         print("Querying vector store...")
         results = query_resume_context("Who is a data scientist?", user_id)

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from .. import schemas, crud, database, models
+from .. import crud, database
 from ..services import openai_service
 import json
 

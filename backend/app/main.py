@@ -3,10 +3,17 @@ from sqlalchemy.orm import Session
 from . import models, schemas, crud, database
 from .database import engine
 from .routers import resume, chat, roadmap, analytics, career, progress, auth
+from contextlib import asynccontextmanager
 
-models.Base.metadata.create_all(bind=engine)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        models.Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        print(f"Warning: Database creation failed during startup. Error: {e}")
+    yield
 
-app = FastAPI(title="AI Career Recommender")
+app = FastAPI(title="AI Career Recommender", lifespan=lifespan)
 
 # Dependency
 def get_db():

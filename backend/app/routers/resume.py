@@ -1,9 +1,8 @@
-from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
+from fastapi import APIRouter, Depends, UploadFile, File
 from sqlalchemy.orm import Session
 from .. import schemas, crud, database
 from ..services import parser_service, openai_service, chroma_service
 import shutil
-import os
 from pathlib import Path
 
 # Always resolve to project_root/data/resumes regardless of working directory
@@ -44,7 +43,7 @@ async def upload_resume(user_id: int, session_id: int = None, file: UploadFile =
     db_resume = crud.create_resume(db, resume_data)
     
     # Extract details using OpenAI
-    extracted_details = await openai_service.extract_resume_details(parsed_text)
+    await openai_service.extract_resume_details(parsed_text)
     
     # Store in ChromaDB
     chroma_service.add_resume_to_vector_store(parsed_text, str(user_id), str(db_resume.id))
